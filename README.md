@@ -36,6 +36,9 @@ sudo nano ~/.ssh/authorized_keys
 
 ```
 
+## Customise SSH after login message, if needed
+Follow ssh_after_login_metrics.md
+
 ## Install docker
 https://docs.docker.com/engine/install/debian/
 
