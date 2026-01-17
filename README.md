@@ -17,7 +17,7 @@ Follow steps provided in fde.md or run below command after rebooting into rescue
 To unlock discs grub would need TTY access before it boots. If this is cloud host navigate to KVM Panel everytime system reboots.
 
 ```
-./fde_rescue.sh -d sdb -r sdb1 -e sdb2
+./fde_rescue_mode.sh -d sdb -r sdb1 -e sdb2
 
 ```
 
@@ -46,9 +46,31 @@ sudo nano ~/.ssh/authorized_keys
 ## Install Docker
 https://docs.docker.com/engine/install/debian/
 
+```
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/debian
+Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+sudo systemctl status docker
+```
+
 ## Setup Docker workspace container
 
-Use provided Dockerfile, compose.yaml and setup scripts to setup GUI docker container.
+Use provided Dockerfile, compose.yaml and setup.sh to setup GUI docker container.
 
 #### Run using docker
 ```
