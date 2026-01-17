@@ -1,5 +1,18 @@
 #!/bin/bash
 
+while getopts ":o:n:" opt; do
+  case ${opt} in
+    o ) old=$OPTARG;;
+    n ) new=$OPTARG;;
+    \? ) echo "Usage: cmd [-o] debian [-n] dubian";;
+  esac
+done
+
+if [ -z "$old" ] || [ -z "$new" ]; then
+  echo "old, new user names are required."
+  exit 1
+fi
+
 # Regenerate host keys, only allow few crypt algos
 rm /etc/ssh/ssh_host_*
 ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N ""
@@ -19,4 +32,14 @@ sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_con
 
 service ssh restart
 service sshd restart
+
+# add new user
+sudo useradd -m $new
+sudo usermod -aG sudo,adm,dialout,cdrom,floppy,audio,dip,video,plugdev $new
+sed -i '$a\'''$new''' ALL=(ALL) NOPASSWD:ALL' /etc/sudoers.d/90-cloud-init-users
+
+sudo cp -r /home/$old/.ssh/ /home/$new/.ssh
+sudo chown $new:$new /home/$new/.ssh/
+sudo chown $new:$new /home/$new/.ssh/authorized_keys
+sudo chsh -s /bin/bash $new
 
