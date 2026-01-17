@@ -9,6 +9,20 @@ sudo reboot now
 ## Setup FDE
 Follow steps provided in fde.md
 
+## Change default user
+```
+./add_new_user.sh
+
+# login as new user ink nwe shell, check if everything is working fine.
+# Reboot, login as new user in new system.
+# Delete old user, remove any unremoved entries
+
+sudo userdel -r debian
+sudo visudo /etc/sudoers.d/90-cloud-init-users
+
+```
+
+
 ## Install docker
 https://docs.docker.com/engine/install/debian/
 
