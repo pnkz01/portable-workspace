@@ -18,7 +18,7 @@ sudo systemctl restart systemd-resolved
 
 # Prepare os for fde
 # enable crytpodisk in grub
-sudo sed -i '$a\GRUB_ENABLE_CRYPTODISK=y' /etc/default/grub
+sudo sed -zi '/GRUB_ENABLE_CRYPTODISK=y/!s/$/\nGRUB_ENABLE_CRYPTODISK=y\n/' /etc/default/grub
 sudo cat /etc/default/grub
 
 # check if correct keyboard layout is set in /etc/default/keyboard
