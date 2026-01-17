@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # enable crytpodisk in grub
-sudo echo "GRUB_ENABLE_CRYPTODISK=y" >> /etc/default/grub
+sudo sed -i '$a\GRUB_ENABLE_CRYPTODISK=y' /etc/default/grub
 sudo cat /etc/default/grub
 
 # check correct keyboard layout in /etc/default/keyboard
