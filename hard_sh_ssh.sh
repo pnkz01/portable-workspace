@@ -30,6 +30,37 @@ sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
 
+# add system metrics info to ssh login welcome message
+metrics=$(cat <<'EOF'
+#!/bin/bash
+
+# Collect system metrics
+CPU=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}') # Sum of user and system CPU usage
+MEMORY=$(free -m | awk 'NR==2{printf "%.2f", $3*100/$2 }') # Memory usage as a percentage
+DISK=$(df -h / | awk 'NR==2 {print $5}') # Root filesystem usage as a percentage
+UPTIME=$(uptime -p) # Human-readable uptime
+TOP_PROCESSES=$(ps -eo pid,comm,%mem,%cpu --sort=-%cpu | head -n 6) # Top 5 processes
+
+# Display the report on the terminal
+echo "$(date)"
+echo "---------------------------------"
+echo "CPU Usage: $CPU%"
+echo "Memory Usage: $MEMORY%"
+echo "Disk Usage: $DISK"
+echo "Uptime: $UPTIME"
+echo ""
+echo "Top 5 Processes by CPU Usage:"
+echo "$TOP_PROCESSES"
+echo ""
+echo "Current active users"
+echo "$(who)"
+echo "---------------------------------"
+
+EOF
+)
+
+echo "$metrics" > /etc/update-motd.d/10-uname
+
 service ssh restart
 service sshd restart
 
