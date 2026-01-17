@@ -12,15 +12,6 @@ cat /etc/crypttab
 cat /etc/default/grub
 ```
 
-## Run fde_pre.sh in main os
-```
-./fde_pre.sh
-```
-This script prepare the host vm for enryption.
-
-After script executes, reboot into resuce mode.
-
-
 ## Run fde_rescue_mode_init.sh after logging into rescue mode
 ```
 ./fde_rescue_mode_init.sh /dev/sdb1
