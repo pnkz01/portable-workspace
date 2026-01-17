@@ -56,5 +56,14 @@ sudo docker exec -it dubian /bin/bash
 ```
 sudo docker compose up -d
 sudo docker compose exec vnc bash
+
+# Inside container environment
+su dubian
+bash
+vncserver -select-de xfce
+
+# Visit url provided by vncserver
+
+
 ```
 
