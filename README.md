@@ -2,9 +2,6 @@
 
 ## Setup Host VM
 ```
-ip addr
-ss -tulpn
-
 ./os_init.sh
 
 sudo reboot now
