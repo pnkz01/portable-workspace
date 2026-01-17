@@ -33,12 +33,13 @@ This script encrypt provided drive using luks
 
 ## Run fde_rescue_chroot_post.sh to change boot entries
 ```
-exit
 ./fde_rescue_chroot_post.sh
 ```
 
 ## Run fde_rescue_chroot_exit.sh to exit chroot session safely
 ```
+exit # from current chroot session
+
 ./fde_rescue_chroot_exit.sh
 ```
 
