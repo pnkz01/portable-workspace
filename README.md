@@ -2,7 +2,11 @@
 
 ## Setup Host VM
 ```
+ip addr
+ss -tulpn
+
 ./os_init.sh
+
 sudo reboot now
 ```
 
@@ -22,6 +26,15 @@ sudo visudo /etc/sudoers.d/90-cloud-init-users
 
 ```
 
+## Harden SSH
+```
+sudo ./hard_sh_ssh.sh
+
+# Change or add new add key
+
+sudo nano ~/.ssh/authorized_keys
+
+```
 
 ## Install docker
 https://docs.docker.com/engine/install/debian/
