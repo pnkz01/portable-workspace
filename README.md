@@ -3,7 +3,7 @@
 ## Initialize Debian Host VM
 
 ```
-./os_init.sh
+sudo ./os_init.sh
 
 sudo reboot now
 
