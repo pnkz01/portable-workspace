@@ -10,6 +10,9 @@ sudo reboot now
 ## Setup FDE
 Follow steps provided in fde.md
 
+
+After successfull encryption and reboot, follow next steps
+
 ## Change default user
 ```
 ./add_new_user.sh
@@ -28,7 +31,6 @@ sudo visudo /etc/sudoers.d/90-cloud-init-users
 sudo ./hard_sh_ssh.sh
 
 # Change or add new add key
-
 sudo nano ~/.ssh/authorized_keys
 
 ```
@@ -40,6 +42,9 @@ Follow ssh_after_login_metrics.md
 https://docs.docker.com/engine/install/debian/
 
 ## Setup docker container
+
+Use provided Dockerfile, compose.yaml and setup scripts to setup gui docker container.
+
 ### Run using docker
 ```
 sudo docker build -t dubian .
