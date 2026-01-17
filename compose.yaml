@@ -11,4 +11,4 @@ services:
     tty: true
 
 volumes:
-  dubian_data
+  dubian_data:
