@@ -1,5 +1,7 @@
 #!/bin/bash
 # list system resources
+ip addr
+ss -tulpn
 lsblk
 df -h
 sudo blkid
