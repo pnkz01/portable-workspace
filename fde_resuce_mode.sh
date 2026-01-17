@@ -66,9 +66,9 @@ lsblk
 LUKS_MOUNT_ID="$(blkid -o value -s UUID ${crypt})"
 
 # change config for automounting cryptroot
-sed -i '$a\root_crypt UUID='"$LUKS_MOUNT_ID"' none luks,discard' /etc/crypttab
-sed -i 's/.*\/ ext4 .*/\/dev\/mapper\/root_crypt \/ ext4 errors=remount-ro 0 1/' /etc/fstab
-sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=${LUKS_MOUNT_ID}:root_crypt root=\/dev\/mapper\/root_crypt\"/" /etc/default/grub
+sed -i '$a\'"$crypt"' UUID='"$LUKS_MOUNT_ID"' none luks,discard' /etc/crypttab
+sed -i 's/.*\/ ext4 .*/\/dev\/mapper\/'"$crypt"' \/ ext4 errors=remount-ro 0 1/' /etc/fstab
+sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=${LUKS_MOUNT_ID}:${crypt} root=\/dev\/mapper\/${crypt}\"/" /etc/default/grub
 
 # check files after change
 cat /etc/crypttab
