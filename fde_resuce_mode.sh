@@ -63,7 +63,7 @@ chroot /mnt/"$crypt"/
 mount $efi /boot/efi
 lsblk
 
-LUKS_MOUNT_ID="$(blkid -o value -s UUID ${crypt})"
+LUKS_MOUNT_ID="$(blkid -o value -s UUID ${root})"
 
 # change config for automounting cryptroot
 sed -i '$a\'"$crypt"' UUID='"$LUKS_MOUNT_ID"' none luks,discard' /etc/crypttab
