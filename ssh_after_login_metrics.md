@@ -31,6 +31,9 @@ echo "Uptime: $UPTIME"
 echo ""
 echo "Top 5 Processes by CPU Usage:"
 echo "$TOP_PROCESSES"
+echo ""
+echo "Current active users"
+echo "$(who)"
 echo "---------------------------------"
 
 ```
