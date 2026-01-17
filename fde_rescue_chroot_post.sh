@@ -9,7 +9,7 @@ mount $EFI_MOUNT /boot/efi
 lsblk
 
 # change config for automounting cryptdisk
-echo "root_crypt UUID=${LUKS_MOUNT_ID} none luks,discard" >> /etc/crypttab
+sed -i '$a\root_crypt UUID='"$LUKS_MOUNT_ID"' none luks,discard' /etc/crypttab
 sed -i 's/.*\/ ext4 .*/\/dev\/mapper\/root_crypt \/ ext4 errors=remount-ro 0 1/' /etc/fstab
 sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=${LUKS_MOUNT_ID}:root_crypt root=\/dev\/mapper\/root_crypt\"/" /etc/default/grub
 
