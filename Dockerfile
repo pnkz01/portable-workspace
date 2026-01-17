@@ -17,7 +17,7 @@ RUN apt update && apt upgrade -y \
     && apt install -y --no-install-recommends \
        sudo systemd systemd-sysv \
        build-essential wget curl libffi-dev libssl-dev procps ca-certificates \
-       python3-dev nano \
+       python3-dev nano git \
        iproute2 \
        xfce4 xfce4-goodies
 
