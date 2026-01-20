@@ -56,39 +56,5 @@ mount -t sysfs none /mnt/"$crypt"/sys
 mount --bind /dev /mnt/"$crypt"/dev
 chroot /mnt/"$crypt"/
 
-# Inside chrooted environment
-mount $efi /boot/efi
-lsblk
-
-LUKS_MOUNT_ID="$(blkid -o value -s UUID ${root})"
-
-# change config for automounting cryptroot
-sed -i '$a\'"$crypt"' UUID='"$LUKS_MOUNT_ID"' none luks,discard' /etc/crypttab
-sed -i "s/.*\/ ext4 .*/\/dev\/mapper\/${crypt} \/ ext4 errors=remount-ro 0 1/" /etc/fstab
-sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=${LUKS_MOUNT_ID}:${crypt} root=\/dev\/mapper\/${crypt}\"/" /etc/default/grub
-
-# check files after change
-cat /etc/crypttab
-cat /etc/fstab
-cat /etc/default/grub
-diff -u /etc/mtab /proc/mounts
-
-# update grub and initramfs img
-grub-install ${drive}
-update-initramfs -k all -u  
-update-grub
-cat /boot/grub/grub.cfg | grep -F "root="
-
-# Exit chroot
-exit
-
-# Inside rescue enviroment
-umount /mnt/${crypt}/proc
-umount /mnt/${crypt}/sys
-umount /mnt/${crypt}/dev
-umount /mnt/${crypt}/boot/efi
-umount /mnt/${crypt}
-cryptsetup close ${crypt}
-rmdir -v /mnt/${crypt}
-
+echo "Continue inside chroot env"
 echo "Please try to reboot into normal mode..."
