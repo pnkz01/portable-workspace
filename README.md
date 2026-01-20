@@ -9,15 +9,6 @@ chmod +x os_init.sh
 
 sudo ./os_init.sh
 
-# list system resources
-ip addr
-ss -tulpn
-lsblk
-df -h
-sudo blkid
-free -mh
-ps -ef
-
 # reboot into resuce mode
 sudo reboot now
 
@@ -26,30 +17,17 @@ sudo reboot now
 
 ## Setup Full Disc Encryption, if not using pre encrypted disc
 
-Follow steps provided in fde.md or run below command after rebooting into rescue mode.
-
-To unlock discs grub would need TTY access before it boots. If this is cloud host navigate to KVM Panel everytime system reboots.
+To unlock discs grub would need TTY access before it boots. If this is cloud host navigate to KVM Panel everytime system reboots for disck unlock.
 
 ```
-nano fde_resuce_mode.sh
-
 fdisk -l
 blkid
 
+nano fde_resuce_mode.sh
+
 chmod +x fde_resuce_mode.sh
 
-./fde_rescue_mode.sh -d sdb -r sdb1 -e sdb2
-
-
-# Grub boot fix
-# PBKDF:      pbkdf2
-# should be pbkdf2 not argon2id for grub to unlock using correct key format
-# This should be fixed and not needed for newer grub versions
-cryptsetup luksDump "$root"
-cryptsetup luksConvertKey --pbkdf pbkdf2 "$root"
-cryptsetup luksDump "$root"
-cryptsetup --verbose open --test-passphrase "$root"
-
+./fde_rescue_mode.sh -d sda -r sda1 -e sda15
 
 ```
 
