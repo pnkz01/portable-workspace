@@ -19,7 +19,7 @@ RUN apt update && apt upgrade -y \
        build-essential wget curl libffi-dev libssl-dev procps ca-certificates \
        python3-dev nano git \
        iproute2 \
-       xfce4 xfce4-goodies
+       xfce4 xfce4-terminal dbus-x11 xterm libnss-wrapper
 
 # Install VNC Service
 RUN wget https://github.com/kasmtech/KasmVNC/releases/download/v${VNC_VER}/${VNC_PKG} \
