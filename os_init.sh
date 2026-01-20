@@ -1,12 +1,4 @@
 #!/bin/bash
-# list system resources
-ip addr
-ss -tulpn
-lsblk
-df -h
-sudo blkid
-free -mh
-ps -ef
 
 # os env init
 sudo apt update && sudo apt upgrade -y
