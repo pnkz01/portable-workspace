@@ -4,10 +4,21 @@
 
 ```
 nano os_init.sh
+
 chmod +x os_init.sh
 
 sudo ./os_init.sh
 
+# list system resources
+ip addr
+ss -tulpn
+lsblk
+df -h
+sudo blkid
+free -mh
+ps -ef
+
+# reboot into resuce mode
 sudo reboot now
 
 ```
