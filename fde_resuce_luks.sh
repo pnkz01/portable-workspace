@@ -48,13 +48,22 @@ cryptsetup reencrypt --encrypt --reduce-device-size 16M "$root"
 cryptsetup open "$root" "$crypt"
 resize2fs /dev/mapper/"$crypt"
 
+# Grub boot fix
+# PBKDF:      pbkdf2
+# should be pbkdf2 not argon2id for grub to unlock using correct key format
+# This should be fixed and not needed for newer grub versions
+cryptsetup luksDump "$root"
+cryptsetup luksConvertKey --pbkdf pbkdf2 "$root"
+cryptsetup luksDump "$root"
+cryptsetup --verbose open --test-passphrase "$root"
+
 # Enter chroot mode
 mkdir /mnt/"$crypt"
 mount /dev/mapper/"$crypt" /mnt/"$crypt"
 mount -t proc none /mnt/"$crypt"/proc
 mount -t sysfs none /mnt/"$crypt"/sys
 mount --bind /dev /mnt/"$crypt"/dev
-chroot /mnt/"$crypt"/
 
-echo "Continue inside chroot env"
-echo "Please try to reboot into normal mode..."
+echo "Continue inside chroot environment"
+
+chroot /mnt/"$crypt"/
