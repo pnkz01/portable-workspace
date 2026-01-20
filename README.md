@@ -33,6 +33,7 @@ To unlock discs grub would need TTY access before it boots. If this is cloud hos
 ```
 nano fde_resuce_mode.sh
 
+fdisk -l
 blkid
 
 chmod +x fde_resuce_mode.sh
