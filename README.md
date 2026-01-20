@@ -1,6 +1,6 @@
 # Portable Workspacez
 
-## Initialize Debian Host VM
+## Initialize Debian Host OS
 
 ```
 nano os_init.sh
@@ -15,30 +15,33 @@ sudo reboot now
 ```
 
 
-## Setup Full Disc Encryption, if not using pre encrypted disc
+## Setup Full Disc Encryption for debian host (if not using pre encrypted drives)
 
-To unlock discs grub would need TTY access before it boots. If this is cloud host navigate to KVM Panel everytime system reboots for disck unlock.
+To unlock disc grub would need TTY access before it boots. If this is cloud host navigate to KVM Panel everytime system reboots to unlock disc.
 
 ```
+lsblk
 fdisk -l
 blkid
 
-nano fde_resuce_mode.sh
+nano fde_resuce.sh
 
-chmod +x fde_resuce_mode.sh
+chmod +x fde_resuce.sh
 
-./fde_rescue_mode.sh -d sda -r sda1 -e sda15
+./fde_rescue.sh -d sda -r sda1 -e sda15
 
 ```
 
-After successfull encryption and reboot, follow next steps.
+After successfull encryption, reboot into main os and check if grub is able to detect crypt drive and unlock.
 If not, there might be slight mistake configuring grub bhoot entries.
 
+System will ask password 2 times, 1st by grub to unlock boot partition, then by initramfs to further init the system, feed password through KVM.
 
-## Harden SSH
+## Reboot into main os to Harden SSH
 
 ```
 nano hard_sh_ssh.sh
+
 chmod +x hard_sh_ssh.sh
   
 sudo ./hard_sh_ssh.sh -o debian -n dubian
@@ -52,7 +55,6 @@ sudo visudo /etc/sudoers.d/90-cloud-init-users
 
 # Change or add new add key
 sudo nano ~/.ssh/authorized_keys
-
 
 ```
 
@@ -89,11 +91,9 @@ Use provided Dockerfile, compose.yaml and setup.sh to setup GUI docker container
 ```
 sudo docker build -t dubian .
 sudo docker run --privileged -it -d -p 8444:8444 --name dubian dubian
-sudo docker exec -it dubian /bin/bash
+sudo docker exec -it dubian /bin/bash -c "su dubian -P -c 'bash'"
 
 # Inside container environment
-su dubian
-bash
 vncserver -select-de xfce
 
 # Visit url provided by vncserver
@@ -108,7 +108,5 @@ sudo docker compose exec vnc bash -c "su dubian -P -c 'bash'"
 vncserver -select-de xfce
 
 # Visit url provided by vncserver
-
-
 ```
 
