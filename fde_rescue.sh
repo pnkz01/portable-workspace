@@ -64,15 +64,15 @@ mount -t proc none /mnt/"$crypt"/proc
 mount -t sysfs none /mnt/"$crypt"/sys
 mount --bind /dev /mnt/"$crypt"/dev
 
+LUKS_MOUNT_ID="$(blkid -o value -s UUID ${root})"
+
 chroot /mnt/"$crypt"/ /bin/bash <<EOF
 # Inside chrooted environment
 mount $efi /boot/efi
 lsblk
 
-LUKS_MOUNT_ID="$(blkid -o value -s UUID ${root})"
-
 # change config for automounting cryptroot
-sed -i '$a\'"$crypt"' UUID='"$LUKS_MOUNT_ID"' none luks,discard' /etc/crypttab
+sed -i "s/$/${crypt} UUID=${LUKS_MOUNT_ID} none luks,discard" /etc/crypttab
 sed -i "s/.*\/ ext4 .*/\/dev\/mapper\/${crypt} \/ ext4 errors=remount-ro 0 1/" /etc/fstab
 sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=${LUKS_MOUNT_ID}:${crypt} root=\/dev\/mapper\/${crypt}\"/" /etc/default/grub
 
