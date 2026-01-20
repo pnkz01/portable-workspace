@@ -19,3 +19,13 @@ sudo cat /etc/default/keyboard
 sudo update-initramfs -u
 # check that the cryptsetup is installed in initramfs
 lsinitramfs /boot/initrd.img-$(uname -r) | grep crypt
+
+# list system resources
+echo "----------------------------"
+ip addr
+ss -tulpn
+lsblk
+df -h
+sudo blkid
+free -mh
+ps -ef
