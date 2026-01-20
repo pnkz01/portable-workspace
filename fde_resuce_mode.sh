@@ -48,14 +48,6 @@ cryptsetup reencrypt --encrypt --reduce-device-size 16M "$root"
 cryptsetup open "$root" "$crypt"
 resize2fs /dev/mapper/"$crypt"
 
-# PBKDF:      pbkdf2
-# should be pbkdf2 not argon2id for grub to unlock using correct key format
-# This should be fixed and not needed for newer grub versions
-cryptsetup luksDump "$root"
-cryptsetup luksConvertKey --pbkdf pbkdf2 "$root"
-cryptsetup luksDump "$root"
-cryptsetup --verbose open --test-passphrase "$root"
-
 # Enter chroot mode
 mkdir /mnt/"$crypt"
 mount /dev/mapper/"$crypt" /mnt/"$crypt"
