@@ -20,10 +20,15 @@ root="/dev/${root}"
 efi="/dev/${efi}"
 crypt="root_crypt"
 
+if [[ -b "$drive" ]] && [[ -b "$root" ]] && [[ -b "$efi" ]] ; then
+    echo "Encrypting drive $drive $root $efi with crypt mount $crypt"
+else
+    echo "Please try with correct drive ids!"
+    exit 1
+fi
+
 # Run a filesystem check
-e2fsck -f "$drive"
 e2fsck -f "$root"
-e2fsck -f "$efi"
 
 # install cryptsetup
 apt update && apt install cryptsetup -y
