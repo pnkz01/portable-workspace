@@ -40,6 +40,17 @@ chmod +x fde_resuce_mode.sh
 
 ./fde_rescue_mode.sh -d sdb -r sdb1 -e sdb2
 
+
+# Grub boot fix
+# PBKDF:      pbkdf2
+# should be pbkdf2 not argon2id for grub to unlock using correct key format
+# This should be fixed and not needed for newer grub versions
+cryptsetup luksDump "$root"
+cryptsetup luksConvertKey --pbkdf pbkdf2 "$root"
+cryptsetup luksDump "$root"
+cryptsetup --verbose open --test-passphrase "$root"
+
+
 ```
 
 After successfull encryption and reboot, follow next steps.
