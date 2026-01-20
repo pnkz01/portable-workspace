@@ -3,6 +3,9 @@
 ## Initialize Debian Host VM
 
 ```
+nano os_init.sh
+chmod +x os_init.sh
+
 sudo ./os_init.sh
 
 sudo reboot now
@@ -17,6 +20,12 @@ Follow steps provided in fde.md or run below command after rebooting into rescue
 To unlock discs grub would need TTY access before it boots. If this is cloud host navigate to KVM Panel everytime system reboots.
 
 ```
+nano fde_resuce_mode.sh
+
+blkid
+
+chmod +x fde_resuce_mode.sh
+
 ./fde_rescue_mode.sh -d sdb -r sdb1 -e sdb2
 
 ```
@@ -28,6 +37,9 @@ If not, there might be slight mistake configuring grub bhoot entries.
 ## Harden SSH
 
 ```
+nano hard_sh_ssh.sh
+chmod +x hard_sh_ssh.sh
+  
 sudo ./hard_sh_ssh.sh -o debian -n dubian
 
 # login as a new user ink a nwe shell, check if everything is working ass fine.
