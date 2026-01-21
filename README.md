@@ -16,8 +16,9 @@ sudo reboot now
 
 
 ## Setup Full Disc Encryption for debian host (if not using pre encrypted drives)
+Reboot into rescue mode to modify filesystem for full disk encryption.
 
-To unlock disc grub would need TTY access before it boots. If this is cloud host navigate to KVM Panel everytime system reboots to unlock disc.
+Note: To unlock disc grub would need TTY access before it boots. If this is cloud host navigate to KVM Panel everytime system reboots to unlock disc.
 
 ```
 lsblk
