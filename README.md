@@ -95,9 +95,7 @@ sudo docker run --privileged -it -d -p 8444:8444 --name dubian dubian
 sudo docker exec -it dubian /bin/bash -c "su dubian -P -c 'bash'"
 
 # Inside container environment
-vncserver -select-de xfce
-
-# Visit url provided by vncserver
+ls -alh
 ```
 
 #### Run using docker compose
@@ -106,8 +104,7 @@ sudo docker compose up -d
 sudo docker compose exec vnc bash -c "su dubian -P -c 'bash'"
 
 # Inside container environment
-vncserver -select-de xfce
+ls -alh
 
-# Visit url provided by vncserver
 ```
 
