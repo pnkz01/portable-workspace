@@ -28,9 +28,7 @@ RUN rm -rf /var/lib/apt/lists/* \
     && groupadd -r ${USER} \
     && useradd -m -g ${USER} ${USER} \
     && usermod -aG ${SUDO_GROUP} ${USER} \
-    && sed -i "/^%${SUDO_GROUP}/s/ALL\$/NOPASSWD:ALL/g" /etc/sudoers \
-# Add user to ssl-cert group
-    && adduser ${USER} ssl-cert
+    && sed -i "/^%${SUDO_GROUP}/s/ALL\$/NOPASSWD:ALL/g" /etc/sudoers
 
 # Setup VNC Service
 COPY ./setup.sh /tmp/setup.sh
