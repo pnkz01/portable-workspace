@@ -5,7 +5,7 @@ services:
     volumes:
       - dubian_data:/home/dubian
     ports:
-      - "443:8444"
+      - "443:443"
     privileged: true
     stdin_open: true
     tty: true
