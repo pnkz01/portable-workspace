@@ -1,5 +1,5 @@
 services:
-  vnc:
+  container_bass:
     build: .
     hostname: dubiandubaian
     volumes:
