@@ -86,12 +86,12 @@ sudo systemctl status docker
 
 ## Setup Docker workspace container
 
-Use provided Dockerfile, compose.yaml and setup.sh to setup GUI docker container.
+Use provided Dockerfile, compose.yaml and setup.sh to setup docker container.
 
 #### Run using docker
 ```
 sudo docker build -t container_bass .
-sudo docker run --privileged -it -d -p 8444:8444 --name container_bass container_bass
+sudo docker run --privileged -it -d --name container_bass container_bass
 sudo docker exec -it container_bass /bin/bash -c "su dubian -P -c 'bash'"
 
 # Inside container environment
