@@ -90,9 +90,9 @@ Use provided Dockerfile, compose.yaml and setup.sh to setup GUI docker container
 
 #### Run using docker
 ```
-sudo docker build -t dubian .
-sudo docker run --privileged -it -d -p 8444:8444 --name dubian dubian
-sudo docker exec -it dubian /bin/bash -c "su dubian -P -c 'bash'"
+sudo docker build -t container_bass .
+sudo docker run --privileged -it -d -p 8444:8444 --name container_bass container_bass
+sudo docker exec -it container_bass /bin/bash -c "su dubian -P -c 'bash'"
 
 # Inside container environment
 ls -alh
@@ -101,7 +101,7 @@ ls -alh
 #### Run using docker compose
 ```
 sudo docker compose up -d
-sudo docker compose exec vnc bash -c "su dubian -P -c 'bash'"
+sudo docker compose exec container_bass bash -c "su dubian -P -c 'bash'"
 
 # Inside container environment
 ls -alh
