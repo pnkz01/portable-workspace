@@ -85,9 +85,9 @@ sudo systemctl start docker
 sudo systemctl status docker
 ```
 
-## Setup Docker workspace container
+## To setup shell docker workspace container
 
-Use provided Dockerfile, compose.yaml and setup.sh to setup docker container.
+Use provided Dockerfile, compose.yaml, cont_setup.sh, cont_startup.sh files to setup contained environment for your work work.
 
 #### Run using docker
 ```
@@ -108,4 +108,7 @@ sudo docker compose exec container_bass bash -c "su dubian -P -c 'bash'"
 ls -alh
 
 ```
+
+## To setup GUI Desktop workspace container go to desktop folder
+And run `sudo docker compose up` there
 
