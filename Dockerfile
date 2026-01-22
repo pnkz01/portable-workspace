@@ -31,9 +31,15 @@ RUN rm -rf /var/lib/apt/lists/* \
     && sed -i "/^%${SUDO_GROUP}/s/ALL\$/NOPASSWD:ALL/g" /etc/sudoers
 
 # Setup VNC Service
-COPY ./setup.sh /tmp/setup.sh
-RUN chmod +x /tmp/setup.sh && /tmp/setup.sh && rm -f /tmp/setup.sh
+COPY ./cont_setup.sh /tmp/cont_setup.sh
+RUN chmod +x /tmp/cont_setup.sh && /tmp/cont_setup.sh && rm -f /tmp/cont_setup.sh
 
-CMD ["/lib/systemd/systemd"]
+COPY ./cont_startup.sh /usr/bin/cont_startup.sh
+RUN chmod +x /usr/bin/cont_startup.sh
 
 WORKDIR /home/${USER}
+
+ENTRYPOINT ["/usr/bin/cont_startup.sh"]
+
+CMD [""]
+
