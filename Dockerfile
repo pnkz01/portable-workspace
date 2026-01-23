@@ -30,10 +30,11 @@ RUN rm -rf /var/lib/apt/lists/* \
     && usermod -aG ${SUDO_GROUP} ${USER} \
     && sed -i "/^%${SUDO_GROUP}/s/ALL\$/NOPASSWD:ALL/g" /etc/sudoers
 
-# Setup VNC Service
+# Setup Container Build
 COPY ./cont_setup.sh /tmp/cont_setup.sh
 RUN chmod +x /tmp/cont_setup.sh && /tmp/cont_setup.sh && rm -f /tmp/cont_setup.sh
 
+# Init Container Startup 
 COPY ./cont_startup.sh /usr/bin/cont_startup.sh
 RUN chmod +x /usr/bin/cont_startup.sh
 
