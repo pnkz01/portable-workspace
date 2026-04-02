@@ -14,7 +14,7 @@ ENV USER=dubian \
 RUN apt update && apt upgrade -y \
     && apt install -y --no-install-recommends \
        sudo systemd systemd-sysv \
-       build-essential libffi-dev libssl-dev procps ca-certificates wget curl \
+       build-essential cmake libffi-dev libssl-dev procps ca-certificates wget curl \
        python3-dev nano git \
        iproute2
 
@@ -30,6 +30,8 @@ RUN rm -rf /var/lib/apt/lists/* \
     && usermod -aG ${SUDO_GROUP} ${USER} \
     && sed -i "/^%${SUDO_GROUP}/s/ALL\$/NOPASSWD:ALL/g" /etc/sudoers
 
+WORKDIR /home/${USER}
+
 # Setup Container Build
 COPY ./cont_setup.sh /tmp/cont_setup.sh
 RUN chmod +x /tmp/cont_setup.sh && /tmp/cont_setup.sh && rm -f /tmp/cont_setup.sh
@@ -37,8 +39,6 @@ RUN chmod +x /tmp/cont_setup.sh && /tmp/cont_setup.sh && rm -f /tmp/cont_setup.s
 # Init Container Startup 
 COPY ./cont_startup.sh /usr/bin/cont_startup.sh
 RUN chmod +x /usr/bin/cont_startup.sh
-
-WORKDIR /home/${USER}
 
 ENTRYPOINT ["/usr/bin/cont_startup.sh"]
 
