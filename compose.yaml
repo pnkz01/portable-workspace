@@ -9,6 +9,8 @@ services:
     privileged: true
     stdin_open: true
     tty: true
+    environment:
+      - TERM=xterm-256color
 
 volumes:
   dubian_data:
