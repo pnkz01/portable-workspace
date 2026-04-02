@@ -14,7 +14,7 @@ ENV USER=debaian \
 RUN apt update && apt upgrade -y \
     && apt install -y --no-install-recommends \
        sudo systemd systemd-sysv \
-       build-essential libffi-dev libssl-dev procps ca-certificates \
+       build-essential cmake libffi-dev libssl-dev procps ca-certificates \
        python3-dev curl wget nano git \
        iproute2 \
        xfce4 xfce4-goodies
@@ -59,6 +59,8 @@ RUN rm -rf /var/lib/apt/lists/* \
 # Add user to ssl-cert group
     && adduser ${USER} ssl-cert
 
+WORKDIR /home/${USER}
+
 # Setup VNC Service
 COPY ./cont_setup.sh /tmp/cont_setup.sh
 RUN chmod +x /tmp/cont_setup.sh && /tmp/cont_setup.sh && rm -f /tmp/cont_setup.sh
@@ -66,9 +68,6 @@ RUN chmod +x /tmp/cont_setup.sh && /tmp/cont_setup.sh && rm -f /tmp/cont_setup.s
 COPY ./cont_startup.sh /usr/bin/cont_startup.sh
 RUN chmod +x /usr/bin/cont_startup.sh
 
-WORKDIR /home/${USER}
-
 ENTRYPOINT ["/usr/bin/cont_startup.sh"]
 
 CMD [""]
-
